@@ -1,0 +1,3 @@
+include ':CustomeVerticalCalender'
+include ':app'
+rootProject.name = "CustomeCalendarVertical"
