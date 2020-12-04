@@ -5,6 +5,7 @@ import `in`.rahultyagi.adapter.TimelineAdapter
 import android.content.Context
 import android.util.AttributeSet
 import android.util.Log
+import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,13 +18,13 @@ import java.util.*
  */
 class TimelineView : RecyclerView, RefreshData {
     private var adapter: TimelineAdapter? = null
+    val datepicker:DatePickerTimeline?=null
     private var monthTextColor = 0
     private var dateTextColor = 0
     private var dayTextColor = 0
     private var selectedColor = 0
     private var disabledColor = 0
-    var mLayoutSuppressed = false
-
+public var strMonthValue:String?=null
     @VisibleForTesting
     var mLayout: LayoutManager? = null
 
@@ -64,6 +65,8 @@ class TimelineView : RecyclerView, RefreshData {
        // listener = this
         adapter = TimelineAdapter(this, -1)
         setAdapter(adapter)
+
+
     }
 
     fun getMonthTextColor(): Int {
@@ -124,6 +127,9 @@ class TimelineView : RecyclerView, RefreshData {
     fun setOnDateSelectedListener(listener: OnDateSelectedListener?) {
         adapter?.setDateSelectedListener(listener)
     }
+   fun setMonthSelectedListener(listener: sendMonth?) {
+        adapter?.setMonthSelectedListener(listener)
+    }
 
     fun setInitialDate(year: Int, month: Int, date: Int) {
         this.year = year
@@ -145,12 +151,8 @@ class TimelineView : RecyclerView, RefreshData {
             adapter?.setSelectedPosition(position)
            // linearLayoutManager.scrollToPositionWithOffset(pos, 0);
            // recyclerview.scrollToPosition(position)
-            //this.scrollToPosition(position)
+           // this.scrollToPosition(position)
            this.smoothScrollToPosition(position)
-
-
-
-            Log.e("TimelineSettingPosition",""+position)
             invalidate()
         } catch (e: ParseException) {
             e.printStackTrace()
@@ -170,6 +172,7 @@ class TimelineView : RecyclerView, RefreshData {
 
     companion object {
         private const val TAG = "TimelineView"
+
     }
 
     override fun refresh() {
@@ -183,4 +186,11 @@ class TimelineView : RecyclerView, RefreshData {
 
         Log.e("refreshingData", "yessss")
     }
+
+//    override fun month_of_day(month: String) {
+//        Log.e("refreshingData", ""+month)
+//
+//    }
+
+
 }

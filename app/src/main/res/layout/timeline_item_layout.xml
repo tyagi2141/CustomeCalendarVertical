@@ -4,13 +4,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+ >
+<LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp"
     android:paddingTop="3dp"
+    android:orientation="vertical"
     android:paddingBottom="3dp">
-
     <TextView
         android:id="@+id/monthView"
         android:layout_width="wrap_content"
@@ -21,6 +25,7 @@
         android:textAllCaps="true"
         android:textColor="@android:color/black"
         android:textSize="@dimen/monthTextSize"
+        android:visibility="gone"
         tools:text="FEB" />
 
     <TextView
@@ -52,4 +57,10 @@
         android:textColor="@android:color/black"
         android:textSize="@dimen/dayTextSize"
         tools:text="TUE"/>
+
+</LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#838381"/>
 </LinearLayout>

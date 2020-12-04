@@ -4,6 +4,7 @@ package `in`.rahultyagi
  * Created by Rahul on 03/12/20.
  */
 
+import `in`.rahultyagi.adapter.TimelineAdapter
 import `in`.rahultyagi.pojo.MyListData
 import `in`.rahultyagi.recycle.MyListAdapter
 import android.os.Bundle
@@ -18,12 +19,14 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class MainActivity : AppCompatActivity(), MyListAdapter.MyDateData {
+class MainActivity : AppCompatActivity(), MyListAdapter.MyDateData
+    {
     val dateForamate = SimpleDateFormat("dd-MM-yyyy")
 
     var myListData: Array<MyListData>? = null
     var datePickerTimeline: DatePickerTimeline? = null
     var recyclerView: RecyclerView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -31,7 +34,7 @@ class MainActivity : AppCompatActivity(), MyListAdapter.MyDateData {
 
         val todayDate = Calendar.getInstance().time
         val calendar: Calendar = Calendar.getInstance();
-        calendar.setTime(todayDate);
+        calendar.time = todayDate;
 
         val year = calendar.get(Calendar.YEAR);
         val month = calendar.get(Calendar.MONTH);
@@ -39,6 +42,8 @@ class MainActivity : AppCompatActivity(), MyListAdapter.MyDateData {
         datePickerTimeline?.setInitialDate(year, month, day)
         val date = Calendar.getInstance()
         date.add(Calendar.DAY_OF_YEAR, 5)
+
+
         //  datePickerTimeline?.setActiveDate(date)
         datePickerTimeline?.setOnDateSelectedListener(object : OnDateSelectedListener {
             override fun onDateSelected(year: Int, month: Int, day: Int, dayOfWeek: Int) {
@@ -186,8 +191,6 @@ class MainActivity : AppCompatActivity(), MyListAdapter.MyDateData {
         recyclerView?.adapter = adapter
 
 
-
-
     }
 
     companion object {
@@ -195,8 +198,6 @@ class MainActivity : AppCompatActivity(), MyListAdapter.MyDateData {
         var listener: RefreshData? = null
 
     }
-
-
 
 
     override fun selectedData(dates: String, position: Int) {
@@ -222,10 +223,7 @@ class MainActivity : AppCompatActivity(), MyListAdapter.MyDateData {
         datePickerTimeline?.getPositionRefresh()
         val arrayDate = arrayOf(calendar.time)
         datePickerTimeline?.deactivateDates(arrayDate)
-        Log.e(
-            "dateFromInterface",
-            "" + year + " " + month + " " + day
-        )
+
 
     }
 
@@ -239,10 +237,10 @@ class MainActivity : AppCompatActivity(), MyListAdapter.MyDateData {
     fun getPositionByDate(date: String): Int? {
         var position: Int? = null
         for ((index, value) in myListData!!.withIndex()) {
-            println("the element at $index is ${value.getImgId()}" + " === " + date)
+           // println("the element at $index is ${value.getImgId()}" + " === " + date)
 
             val mypojo = myListData!![index].getImgId()
-            if (mypojo?.equals(date)!!) {
+            if (mypojo == date) {
                 position = index
                 break
             } else {
@@ -251,9 +249,8 @@ class MainActivity : AppCompatActivity(), MyListAdapter.MyDateData {
             }
         }
 
-
-
-
         return position
     }
+
+
 }

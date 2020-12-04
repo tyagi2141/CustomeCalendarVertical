@@ -3,6 +3,7 @@ package `in`.rahultyagi.adapter
 import `in`.rahultyagi.OnDateSelectedListener
 import `in`.rahultyagi.R
 import `in`.rahultyagi.TimelineView
+import `in`.rahultyagi.sendMonth
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -24,7 +25,7 @@ class TimelineAdapter(timelineView: TimelineView, selectedPosition: Int) :
     private var selectedView: View? = null
     private var selectedPosition: Int
 
-
+    var sendmonth: sendMonth? = null
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -46,6 +47,8 @@ class TimelineAdapter(timelineView: TimelineView, selectedPosition: Int) :
         val dayOfWeek = calendar[Calendar.DAY_OF_WEEK]
         val day = calendar[Calendar.DAY_OF_MONTH]
         val isDisabled = holder.bind(month, day, dayOfWeek, year, position)
+        sendmonth?.month_of_day(getMonthOnScroll(month))
+
         holder.rootView.setOnClickListener { v ->
             if (selectedView != null) {
                 selectedView!!.background = null
@@ -53,7 +56,7 @@ class TimelineAdapter(timelineView: TimelineView, selectedPosition: Int) :
             if (!isDisabled) {
                 v.background = timelineView.getResources().getDrawable(R.drawable.background_shape)
                 selectedPosition = position
-                Log.e("calenderPosition",""+selectedPosition)
+                Log.e("calenderPosition", "" + selectedPosition)
                 selectedView = v
                 if (listener != null) listener?.onDateSelected(year, month, day, dayOfWeek)
             } else {
@@ -66,6 +69,7 @@ class TimelineAdapter(timelineView: TimelineView, selectedPosition: Int) :
                 )
             }
         }
+
     }
 
     private fun resetCalendar() {
@@ -80,9 +84,10 @@ class TimelineAdapter(timelineView: TimelineView, selectedPosition: Int) :
         this.selectedPosition = selectedPosition
     }
 
-    fun getPosition():Int{
-       return  selectedPosition
+    fun getPosition(): Int {
+        return selectedPosition
     }
+
     override fun getItemCount(): Int {
         return Int.MAX_VALUE
     }
@@ -94,6 +99,10 @@ class TimelineAdapter(timelineView: TimelineView, selectedPosition: Int) :
 
     fun setDateSelectedListener(listener: OnDateSelectedListener?) {
         this.listener = listener
+    }
+
+  fun setMonthSelectedListener(sendmonth: sendMonth?) {
+        this.sendmonth = sendmonth
     }
 
     inner class ViewHolder(itemView: View) :
@@ -141,14 +150,18 @@ class TimelineAdapter(timelineView: TimelineView, selectedPosition: Int) :
 
     companion object {
         private const val TAG = "TimelineAdapter"
-        private val WEEK_DAYS =
-            DateFormatSymbols.getInstance().shortWeekdays
-        private val MONTH_NAME =
-            DateFormatSymbols.getInstance().shortMonths
+        private val WEEK_DAYS = DateFormatSymbols.getInstance().shortWeekdays
+        private val MONTH_NAME = DateFormatSymbols.getInstance().shortMonths
     }
 
     init {
         this.timelineView = timelineView
         this.selectedPosition = selectedPosition
     }
+
+    fun getMonthOnScroll(month: Int): String {
+        return MONTH_NAME[month].toUpperCase(Locale.US)
+    }
+
+
 }

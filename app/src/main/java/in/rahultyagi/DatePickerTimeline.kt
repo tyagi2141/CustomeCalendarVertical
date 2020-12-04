@@ -4,9 +4,9 @@ import android.annotation.TargetApi
 import android.content.Context
 import android.os.Build
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.TextView
 import java.util.*
 
 /**
@@ -14,6 +14,8 @@ import java.util.*
  */
 class DatePickerTimeline : LinearLayout {
     private var timelineView: TimelineView? = null
+    private var tvMonth: TextView? = null
+
 
     constructor(context: Context?) : super(context) {}
     constructor(context: Context?, attrs: AttributeSet?) : super(
@@ -44,11 +46,10 @@ class DatePickerTimeline : LinearLayout {
     fun init(attrs: AttributeSet?, defStyleAttr: Int) {
         val view = View.inflate(context, R.layout.date_picker_timeline, this)
         timelineView = view.findViewById(R.id.timelineView)
-
+        tvMonth = view.findViewById(R.id.tvMonthId)
         // load Default values
         val a = context.obtainStyledAttributes(
-            attrs,
-            R.styleable.DatePickerTimeline, defStyleAttr, 0
+            attrs, R.styleable.DatePickerTimeline, defStyleAttr, 0
         )
         timelineView?.setDayTextColor(
             a.getColor(
@@ -82,8 +83,11 @@ class DatePickerTimeline : LinearLayout {
         a.recycle()
         timelineView?.invalidate()
 
-
-
+        timelineView?.setMonthSelectedListener(object : sendMonth {
+            override fun month_of_day(month: String) {
+                tvMonth?.text = month
+            }
+        })
     }
 
     /**
@@ -126,6 +130,7 @@ class DatePickerTimeline : LinearLayout {
         timelineView!!.setOnDateSelectedListener(listener)
     }
 
+
     /**
      * Set a Start date for the calendar (Default, 1 Jan 1970)
      * @param year start year
@@ -136,17 +141,21 @@ class DatePickerTimeline : LinearLayout {
         timelineView!!.setInitialDate(year, month, date)
     }
 
+
     /**
      * Set selected background to active date
      * @param date Active Date
      */
     fun setActiveDate(date: Calendar?) {
+
+
         timelineView!!.setActiveDate(date!!)
     }
 
-    fun getPositionRefresh(){
+    fun getPositionRefresh() {
         timelineView?.getPositionRefresh()
     }
+
     /**
      * Deactivate dates from the calendar. User won't be able to select
      * the deactivated date.
@@ -157,4 +166,6 @@ class DatePickerTimeline : LinearLayout {
     fun deactivateDates(dates: Array<Date?>) {
         timelineView!!.deactivateDates(dates)
     }
+
+
 }
