@@ -4,6 +4,7 @@ import android.annotation.TargetApi
 import android.content.Context
 import android.os.Build
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import java.util.*
@@ -41,8 +42,7 @@ class DatePickerTimeline : LinearLayout {
     }
 
     fun init(attrs: AttributeSet?, defStyleAttr: Int) {
-        val view =
-            View.inflate(context, R.layout.date_picker_timeline, this)
+        val view = View.inflate(context, R.layout.date_picker_timeline, this)
         timelineView = view.findViewById(R.id.timelineView)
 
         // load Default values
@@ -81,6 +81,9 @@ class DatePickerTimeline : LinearLayout {
         timelineView?.deactivateDates(arrayOfNulls(0))
         a.recycle()
         timelineView?.invalidate()
+
+
+
     }
 
     /**
@@ -141,6 +144,9 @@ class DatePickerTimeline : LinearLayout {
         timelineView!!.setActiveDate(date!!)
     }
 
+    fun getPositionRefresh(){
+        timelineView?.getPositionRefresh()
+    }
     /**
      * Deactivate dates from the calendar. User won't be able to select
      * the deactivated date.

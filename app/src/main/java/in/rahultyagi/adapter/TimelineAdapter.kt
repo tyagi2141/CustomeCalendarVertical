@@ -3,6 +3,7 @@ package `in`.rahultyagi.adapter
 import `in`.rahultyagi.OnDateSelectedListener
 import `in`.rahultyagi.R
 import `in`.rahultyagi.TimelineView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,9 @@ class TimelineAdapter(timelineView: TimelineView, selectedPosition: Int) :
     private var listener: OnDateSelectedListener? = null
     private var selectedView: View? = null
     private var selectedPosition: Int
+
+
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -49,6 +53,7 @@ class TimelineAdapter(timelineView: TimelineView, selectedPosition: Int) :
             if (!isDisabled) {
                 v.background = timelineView.getResources().getDrawable(R.drawable.background_shape)
                 selectedPosition = position
+                Log.e("calenderPosition",""+selectedPosition)
                 selectedView = v
                 if (listener != null) listener?.onDateSelected(year, month, day, dayOfWeek)
             } else {
@@ -75,6 +80,9 @@ class TimelineAdapter(timelineView: TimelineView, selectedPosition: Int) :
         this.selectedPosition = selectedPosition
     }
 
+    fun getPosition():Int{
+       return  selectedPosition
+    }
     override fun getItemCount(): Int {
         return Int.MAX_VALUE
     }
